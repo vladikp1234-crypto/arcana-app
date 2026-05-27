@@ -16,10 +16,7 @@ workflows:
       - name: Capacitor sync
         script: node_modules/.bin/cap sync ios
       - name: Install pods
-        script: |
-          cd ios/App
-          pod deintegrate || true
-          pod install --repo-update
+        script: cd ios/App && pod install
       - name: Build iOS
         script: |
           xcodebuild \
