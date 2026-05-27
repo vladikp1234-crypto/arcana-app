@@ -18,7 +18,8 @@ workflows:
       - name: Install pods
         script: |
           cd ios/App
-          pod install
+          pod deintegrate || true
+          pod install --repo-update
       - name: Build iOS
         script: |
           xcodebuild \
