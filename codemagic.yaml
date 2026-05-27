@@ -5,6 +5,8 @@ workflows:
     environment:
       node: 22.3.0
       xcode: latest
+      app_store_connect:
+        api_key: Codemagic
     scripts:
       - name: Install dependencies
         script: npm install
@@ -22,9 +24,6 @@ workflows:
             -configuration Release \
             -archivePath build/App.xcarchive \
             -allowProvisioningUpdates \
-            -authenticationKeyPath ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_IDENTIFIER.p8 \
-            -authenticationKeyID $APP_STORE_CONNECT_KEY_IDENTIFIER \
-            -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
             CODE_SIGN_STYLE=Automatic \
             DEVELOPMENT_TEAM=NZLX757KSZ \
             archive
