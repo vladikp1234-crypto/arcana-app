@@ -27,6 +27,9 @@ workflows:
             -scheme App \
             -configuration Release \
             -archivePath build/App.xcarchive \
+            -allowProvisioningUpdates \
+            CODE_SIGN_STYLE=Automatic \
+            DEVELOPMENT_TEAM=NZLX757KSZ \
             archive
     artifacts:
       - build/App.xcarchive
