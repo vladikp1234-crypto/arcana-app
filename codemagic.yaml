@@ -6,9 +6,6 @@ workflows:
       node: 22.3.0
       xcode: latest
       cocoapods: default
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.vladik.arcana
     scripts:
       - name: Install dependencies
         script: npm install
@@ -30,6 +27,9 @@ workflows:
             -configuration Release \
             -archivePath build/App.xcarchive \
             -allowProvisioningUpdates \
+            -authenticationKeyPath ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_IDENTIFIER.p8 \
+            -authenticationKeyID $APP_STORE_CONNECT_KEY_IDENTIFIER \
+            -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
             CODE_SIGN_STYLE=Automatic \
             DEVELOPMENT_TEAM=NZLX757KSZ \
             archive
