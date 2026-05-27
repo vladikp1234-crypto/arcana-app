@@ -6,6 +6,9 @@ workflows:
       node: 22.3.0
       xcode: latest
       cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.vladik.arcana
     scripts:
       - name: Install dependencies
         script: npm install
@@ -18,7 +21,6 @@ workflows:
       - name: Install pods
         script: |
           cd ios/App
-          pod init
           pod install
       - name: Build iOS
         script: |
@@ -34,4 +36,3 @@ workflows:
     artifacts:
       - build/App.xcarchive
       - /tmp/xcodebuild_logs/*.log
-    
