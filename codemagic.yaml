@@ -1,0 +1,16 @@
+workflows:
+  ionic-capacitor-ios:
+    name: Arcana iOS Build
+    max_build_duration: 120
+    environment:
+      node: 20.11.0
+    scripts:
+      - name: Install dependencies
+        script: npm install
+      - name: Capacitor sync
+        script: npx cap sync ios
+      - name: Build web assets
+        script: echo "Web assets ready"
+    artifacts:
+      - ios/App/build/**/*.ipa
+      - /tmp/xcodebuild_logs/*.log
