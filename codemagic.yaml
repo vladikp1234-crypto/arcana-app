@@ -5,6 +5,10 @@ workflows:
     environment:
       node: 22.3.0
       xcode: latest
+      vars:
+        APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
+        APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
     scripts:
       - name: Install dependencies
         script: npm install
