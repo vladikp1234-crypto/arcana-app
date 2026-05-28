@@ -26,6 +26,8 @@ workflows:
             -archivePath build/App.xcarchive \
             CODE_SIGN_STYLE=Manual \
             DEVELOPMENT_TEAM=NZLX757KSZ \
+            PROVISIONING_PROFILE_SPECIFIER=arcana_app_store \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
             archive
     artifacts:
       - build/App.xcarchive
