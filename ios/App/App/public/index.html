@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#0a0118" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Arcana – Mystic Oracle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+  <div class="nebula"></div>
+
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="moon-phase" id="moonPhase">🌕</div>
+      <h1 class="logo">Arcana</h1>
+      <div class="header-right">
+        <div class="sign-badge" id="signBadge">♈</div>
+        <button class="premium-badge free" id="premiumBadge">3 left</button>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <button class="nav-btn active" data-screen="home">✦ Oracle</button>
+      <button class="nav-btn" data-screen="tarot">🃏 Tarot</button>
+      <button class="nav-btn" data-screen="horoscope">⭐ Stars</button>
+      <button class="nav-btn" data-screen="cosmos">🌙 Cosmos</button>
+    </nav>
+
+    <!-- Screens -->
+    <main class="main">
+
+      <!-- HOME / ORACLE SCREEN -->
+      <section class="screen active" id="screen-home">
+        <div class="oracle-intro">
+          <p class="tagline">The universe speaks.<br/><em>Are you listening?</em></p>
+        </div>
+        <div class="question-area">
+          <label class="question-label">Ask the Oracle a question…</label>
+          <textarea class="question-input" id="oracleQuestion" placeholder="What does the universe want me to know today?"></textarea>
+        </div>
+        <div class="birth-row">
+          <div class="birth-field">
+            <label>Your star sign</label>
+            <select id="starSign">
+              <option value="">Choose sign…</option>
+              <option value="Aries">♈ Aries</option>
+              <option value="Taurus">♉ Taurus</option>
+              <option value="Gemini">♊ Gemini</option>
+              <option value="Cancer">♋ Cancer</option>
+              <option value="Leo">♌ Leo</option>
+              <option value="Virgo">♍ Virgo</option>
+              <option value="Libra">♎ Libra</option>
+              <option value="Scorpio">♏ Scorpio</option>
+              <option value="Sagittarius">♐ Sagittarius</option>
+              <option value="Capricorn">♑ Capricorn</option>
+              <option value="Aquarius">♒ Aquarius</option>
+              <option value="Pisces">♓ Pisces</option>
+            </select>
+          </div>
+        </div>
+        <button class="cta-btn" id="askOracleBtn">
+          <span class="btn-text">Consult the Oracle</span>
+          <span class="btn-glow"></span>
+        </button>
+        <div class="reading-result hidden" id="oracleResult">
+          <div class="result-cards" id="drawnCards"></div>
+          <div class="result-text" id="oracleText"></div>
+          <div class="cosmic-factors" id="cosmicFactors"></div>
+        </div>
+      </section>
+
+      <!-- TAROT SCREEN -->
+      <section class="screen" id="screen-tarot">
+        <h2 class="screen-title">The Major Arcana</h2>
+        <p class="screen-subtitle">✨ Premium: tap any card for a deep AI reading</p>
+        <div class="tarot-grid" id="tarotGrid"></div>
+      </section>
+
+      <!-- HOROSCOPE SCREEN -->
+      <section class="screen" id="screen-horoscope">
+        <h2 class="screen-title">Your Stars Today</h2>
+        <p class="screen-subtitle">✨ Premium: full love, career & spiritual reading</p>
+        <div class="sign-selector" id="horoSignSelector"></div>
+        <div class="horoscope-card hidden" id="horoscopeCard">
+          <div class="horo-sign-icon" id="horoSignIcon"></div>
+          <div class="horo-text" id="horoText"></div>
+          <div class="horo-aspects" id="horoAspects"></div>
+        </div>
+        <button class="cta-btn" id="getHoroBtn">Read My Horoscope</button>
+      </section>
+
+      <!-- COSMOS SCREEN -->
+      <section class="screen" id="screen-cosmos">
+        <h2 class="screen-title">Cosmic Weather</h2>
+        <div class="cosmos-grid">
+          <div class="cosmos-card">
+            <div class="cosmos-icon">🌕</div>
+            <div class="cosmos-label">Moon Phase</div>
+            <div class="cosmos-value" id="moonPhaseName">Full Moon</div>
+            <div class="cosmos-desc" id="moonDesc">Emotions run high.</div>
+          </div>
+          <div class="cosmos-card">
+            <div class="cosmos-icon">☀️</div>
+            <div class="cosmos-label">Solar Season</div>
+            <div class="cosmos-value" id="solarSeason">Gemini</div>
+            <div class="cosmos-desc" id="solarDesc">Communication flows.</div>
+          </div>
+          <div class="cosmos-card">
+            <div class="cosmos-icon">♄</div>
+            <div class="cosmos-label">Saturn</div>
+            <div class="cosmos-value">Direct</div>
+            <div class="cosmos-desc">Discipline supports goals.</div>
+          </div>
+          <div class="cosmos-card">
+            <div class="cosmos-icon">♀</div>
+            <div class="cosmos-label">Venus</div>
+            <div class="cosmos-value">In Taurus</div>
+            <div class="cosmos-desc">Love and beauty favoured.</div>
+          </div>
+        </div>
+        <button class="cta-btn" id="cosmicReadingBtn">Get Cosmic Reading</button>
+        <div class="reading-result hidden" id="cosmicResult">
+          <div class="result-text" id="cosmicText"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Banner Ad (hidden for premium users) -->
+    <div class="banner-ad" id="bannerAd">
+      <span class="ad-label">AD</span>
+      <span class="ad-placeholder">Banner ad appears here (Google AdMob)</span>
+    </div>
+
+  </div>
+
+  <!-- API Key Modal -->
+  <div class="modal-overlay hidden" id="apiModal">
+    <div class="modal">
+      <h3>🔮 Connect the Oracle</h3>
+      <p>Enter your Claude API key to unlock AI-powered readings. Get yours free at <strong>console.anthropic.com</strong></p>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-..." class="api-input" />
+      <button class="cta-btn" id="saveApiKey">Activate Oracle</button>
+      <p class="modal-note">Your key is saved only on this device.</p>
+    </div>
+  </div>
+
+  <!-- Premium Upgrade Modal -->
+  <div class="modal-overlay hidden" id="premiumModal">
+    <div class="modal premium-modal">
+      <div class="premium-stars">✦ ✦ ✦</div>
+      <h3>Arcana Premium</h3>
+      <p id="premiumReason"></p>
+
+      <div class="premium-features">
+        <div class="feature-row">✨ <span>Unlimited readings every day</span></div>
+        <div class="feature-row">🃏 <span>Deep reading for every tarot card</span></div>
+        <div class="feature-row">⭐ <span>Full love, career & spiritual horoscope</span></div>
+        <div class="feature-row">🌕 <span>5-card spreads instead of 3</span></div>
+        <div class="feature-row">🚫 <span>No ads, ever</span></div>
+      </div>
+
+      <div class="premium-price">£4.99 / month</div>
+      <p class="price-note">Cancel any time. Billed monthly.</p>
+
+      <button class="cta-btn gold-btn" id="purchaseBtn">Unlock Premium – £4.99/month</button>
+      <button class="restore-btn" id="restoreBtn">Restore previous purchase</button>
+      <button class="close-btn" id="closePremiumModal">Maybe later</button>
+    </div>
+  </div>
+
+  <!-- Card Modal -->
+  <div class="modal-overlay hidden" id="cardModal">
+    <div class="modal card-modal">
+      <div class="modal-card-art" id="modalCardArt"></div>
+      <h3 id="modalCardName"></h3>
+      <p class="modal-card-keywords" id="modalCardKeywords"></p>
+      <div class="result-text" id="modalCardReading"></div>
+      <button class="close-btn" id="closeCardModal">✕ Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
