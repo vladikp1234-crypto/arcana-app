@@ -5,10 +5,9 @@ workflows:
     environment:
       node: 22.3.0
       xcode: latest
-      vars:
-        APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
-        APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.vladik.arcana
     scripts:
       - name: Install dependencies
         script: npm install
@@ -18,10 +17,6 @@ workflows:
         script: node_modules/.bin/cap add ios || true
       - name: Capacitor sync
         script: node_modules/.bin/cap sync ios
-      - name: Set up API key
-        script: |
-          mkdir -p ~/.appstoreconnect/private_keys
-          printf '%s' "$APP_STORE_CONNECT_PRIVATE_KEY" > ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_IDENTIFIER.p8
       - name: Build iOS
         script: |
           xcodebuild \
@@ -30,9 +25,6 @@ workflows:
             -configuration Release \
             -archivePath build/App.xcarchive \
             -allowProvisioningUpdates \
-            -authenticationKeyPath $HOME/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_IDENTIFIER.p8 \
-            -authenticationKeyID $APP_STORE_CONNECT_KEY_IDENTIFIER \
-            -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
             CODE_SIGN_STYLE=Automatic \
             DEVELOPMENT_TEAM=NZLX757KSZ \
             archive
