@@ -8,6 +8,8 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.vladik.arcana
+        provisioning_profile: arcana_app_store
+        certificate: Arcana Distribution
     scripts:
       - name: Install dependencies
         script: npm install
@@ -24,8 +26,7 @@ workflows:
             -scheme App \
             -configuration Release \
             -archivePath build/App.xcarchive \
-            -allowProvisioningUpdates \
-            CODE_SIGN_STYLE=Automatic \
+            CODE_SIGN_STYLE=Manual \
             DEVELOPMENT_TEAM=NZLX757KSZ \
             archive
     artifacts:
