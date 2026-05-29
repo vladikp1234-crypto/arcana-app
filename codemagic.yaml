@@ -41,9 +41,14 @@ workflows:
           <plist version="1.0">
           <dict>
             <key>method</key>
-            <string>app-store</string>
+            <string>app-store-connect</string>
             <key>teamID</key>
             <string>NZLX757KSZ</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.vladik.arcana</key>
+              <string>7f4b684b-77f6-4afe-bf5e-5227850965cc</string>
+            </dict>
           </dict>
           </plist>
           EOF
