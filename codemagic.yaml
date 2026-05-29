@@ -55,3 +55,7 @@ workflows:
     artifacts:
       - build/output/*.ipa
       - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        api_key: Codemagic
+        submit_to_testflight: true
