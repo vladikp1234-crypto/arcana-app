@@ -277,7 +277,7 @@ async function openCardModal(card) {
 
   try {
     const moon = getMoonPhase();
-    const response = await callClaude(apiKey, `You are a mystical tarot reader. Give a single evocative paragraph (4-6 sentences) reading for ${card.name} (${card.keywords}). The moon is currently ${moon.name}. Blend the card's meaning with the lunar energy. Be poetic, mystical, and personal. Do NOT use bullet points.`);
+    const response = await callClaude(apiKey, `You are a mystical tarot reader. Respond in ${getAILang()}. Give a single evocative paragraph (4-6 sentences) reading for ${card.name} (${card.keywords}). The moon is currently ${moon.name}. Blend the card's meaning with the lunar energy. Be poetic, mystical, and personal. Do NOT use bullet points.`);
     readingEl.textContent = response;
   } catch (e) {
     readingEl.textContent = `${card.meaning}. The ${card.name} calls you to embrace your ${card.keywords.toLowerCase()}.`;
@@ -336,7 +336,7 @@ async function getHoroscope() {
       : 'Write a short reading of 2-3 sentences. Keep it general.';
 
     const text = await callClaude(apiKey,
-      `You are a mystical astrologer. Write a horoscope for ${sign} (element: ${info.element}, ruler: ${info.ruler}).
+      `You are a mystical astrologer. Respond in ${getAILang()}. Write a horoscope for ${sign} (element: ${info.element}, ruler: ${info.ruler}).
        Current cosmic weather: Moon is in ${moon.name} (${moon.energy}), Sun is in ${solar}.
        ${depthInstruction} Be poetic and mystical. No bullet points.
        Then on a new line write: ASPECTS: [3 short phrases separated by |]`);
@@ -396,7 +396,7 @@ async function getCosmicReading() {
 
   try {
     const text = await callClaude(apiKey,
-      `You are a cosmic astrologer. Moon phase: ${moon.name} (${moon.energy}), Sun in ${solar}.
+      `You are a cosmic astrologer. Respond in ${getAILang()}. Moon phase: ${moon.name} (${moon.energy}), Sun in ${solar}.
        Write a 4-5 sentence cosmic weather report. Be mystical and inspiring. No bullet points.`);
     textEl.textContent = text;
     await Monetisation.showInterstitialAd();
@@ -479,7 +479,7 @@ async function doOracleReading() {
 
   try {
     const reading = await callClaude(apiKey,
-      `You are a wise, mystical tarot oracle. Reading for: "${question}"
+      `You are a wise, mystical tarot oracle. Respond in ${getAILang()}. Reading for: "${question}"
        Cards: ${cardDesc}
        ${signContext}
        Cosmic weather: ${moon.name} (${moon.energy}) in ${solar} solar season.
@@ -704,7 +704,7 @@ async function doShuffleReading() {
 
   try {
     const story = await callClaude(apiKey,
-      `You are a wise, theatrical fortune teller in a candlelit room. The cards have just been shuffled and three drawn for this person who asked: "${question}"
+      `You are a wise, theatrical fortune teller. Respond in ${getAILang()}. in a candlelit room. The cards have just been shuffled and three drawn for this person who asked: "${question}"
 
        Cards drawn in order:
        ${cardDesc}
@@ -730,3 +730,19 @@ async function doShuffleReading() {
   // Set up share button
   document.getElementById('shareShuffleBtn').onclick = () => shareReading(storyEl.textContent, cards);
 }
+
+// ══════════════════════════════════════
+// LANGUAGE PICKER INTEGRATION
+// ══════════════════════════════════════
+
+document.getElementById('langToggleBtn').addEventListener('click', () => {
+  buildLanguagePicker();
+  document.getElementById('langModal').classList.remove('hidden');
+});
+
+document.getElementById('closeLangModal').addEventListener('click', () => {
+  document.getElementById('langModal').classList.add('hidden');
+});
+
+// Apply translations on load
+applyTranslations();

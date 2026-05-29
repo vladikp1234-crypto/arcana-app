@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0118" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="manifest.json" />
-  <title>Arcana – Mystic Oracle</title>
+  <title>Veyla – Mystic Oracle</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -20,39 +20,38 @@
     <!-- Header -->
     <header class="header">
       <div class="moon-phase" id="moonPhase">🌕</div>
-      <h1 class="logo">Arcana</h1>
+      <h1 class="logo">Veyla</h1>
       <div class="header-right">
-        <div class="sign-badge" id="signBadge">♈</div>
-        <button class="premium-badge free" id="premiumBadge">3 left</button>
+        <button class="lang-btn" id="langToggleBtn">🌐</button>
+        <button class="premium-badge free" id="premiumBadge">3 <span data-i18n="badge.readingsLeft">left</span></button>
       </div>
     </header>
 
     <!-- Navigation -->
     <nav class="nav">
-      <button class="nav-btn active" data-screen="home">✦ Oracle</button>
-      <button class="nav-btn" data-screen="shuffle">🎴 Shuffle</button>
-      <button class="nav-btn" data-screen="tarot">🃏 Tarot</button>
-      <button class="nav-btn" data-screen="horoscope">⭐ Stars</button>
-      <button class="nav-btn" data-screen="cosmos">🌙 Cosmos</button>
+      <button class="nav-btn active" data-screen="home" data-i18n="nav.oracle">✦ Oracle</button>
+      <button class="nav-btn" data-screen="shuffle" data-i18n="nav.shuffle">🎴 Shuffle</button>
+      <button class="nav-btn" data-screen="tarot" data-i18n="nav.tarot">🃏 Tarot</button>
+      <button class="nav-btn" data-screen="horoscope" data-i18n="nav.stars">⭐ Stars</button>
+      <button class="nav-btn" data-screen="cosmos" data-i18n="nav.cosmos">🌙 Cosmos</button>
     </nav>
 
-    <!-- Screens -->
     <main class="main">
 
       <!-- HOME / ORACLE SCREEN -->
       <section class="screen active" id="screen-home">
         <div class="oracle-intro">
-          <p class="tagline">The universe speaks.<br/><em>Are you listening?</em></p>
+          <p class="tagline"><span data-i18n="tagline.line1">The universe speaks.</span><br/><em data-i18n="tagline.line2">Are you listening?</em></p>
         </div>
         <div class="question-area">
-          <label class="question-label">Ask the Oracle a question…</label>
-          <textarea class="question-input" id="oracleQuestion" placeholder="What does the universe want me to know today?"></textarea>
+          <label class="question-label" data-i18n="oracle.questionLabel">Ask the Oracle a question…</label>
+          <textarea class="question-input" id="oracleQuestion" data-i18n-placeholder="oracle.placeholder" placeholder="What does the universe want me to know today?"></textarea>
         </div>
         <div class="birth-row">
           <div class="birth-field">
-            <label>Your star sign</label>
+            <label data-i18n="oracle.starSignLabel">Your star sign</label>
             <select id="starSign">
-              <option value="">Choose sign…</option>
+              <option value="" data-i18n="oracle.chooseSign">Choose sign…</option>
               <option value="Aries">♈ Aries</option>
               <option value="Taurus">♉ Taurus</option>
               <option value="Gemini">♊ Gemini</option>
@@ -69,7 +68,7 @@
           </div>
         </div>
         <button class="cta-btn" id="askOracleBtn">
-          <span class="btn-text">Consult the Oracle</span>
+          <span class="btn-text" data-i18n="oracle.consult">Consult the Oracle</span>
           <span class="btn-glow"></span>
         </button>
         <div class="reading-result hidden" id="oracleResult">
@@ -81,9 +80,8 @@
 
       <!-- SHUFFLE SCREEN -->
       <section class="screen" id="screen-shuffle">
-        <h2 class="screen-title">The Shuffle</h2>
-        <p class="screen-subtitle">Take a breath. Ask the cards your story.</p>
-
+        <h2 class="screen-title" data-i18n="shuffle.title">The Shuffle</h2>
+        <p class="screen-subtitle" data-i18n="shuffle.subtitle">Take a breath. Ask the cards your story.</p>
         <div class="shuffle-stage" id="shuffleStage">
           <div class="deck-container" id="deckContainer">
             <div class="deck-card deck-card-1"></div>
@@ -91,54 +89,51 @@
             <div class="deck-card deck-card-3"></div>
           </div>
         </div>
-
-        <textarea class="question-input shuffle-input" id="shuffleQuestion" placeholder="What is on your mind tonight?"></textarea>
-
+        <textarea class="question-input shuffle-input" id="shuffleQuestion" data-i18n-placeholder="shuffle.placeholder" placeholder="What is on your mind tonight?"></textarea>
         <button class="cta-btn" id="shuffleBtn">
-          <span class="btn-text">🎴 Shuffle the Cards</span>
+          <span class="btn-text" data-i18n="shuffle.button">🎴 Shuffle the Cards</span>
           <span class="btn-glow"></span>
         </button>
-
         <div class="shuffle-result hidden" id="shuffleResult">
           <div class="drawn-cards-display" id="shuffleDrawnCards"></div>
           <div class="result-text storyteller-text" id="shuffleStory"></div>
-          <button class="share-btn" id="shareShuffleBtn">✨ Share This Story</button>
+          <button class="share-btn" id="shareShuffleBtn" data-i18n="share.shuffleButton">✨ Share This Story</button>
         </div>
       </section>
 
       <!-- TAROT SCREEN -->
       <section class="screen" id="screen-tarot">
-        <h2 class="screen-title">The Major Arcana</h2>
-        <p class="screen-subtitle">✨ Premium: tap any card for a deep AI reading</p>
+        <h2 class="screen-title" data-i18n="tarot.title">The Major Arcana</h2>
+        <p class="screen-subtitle" data-i18n="tarot.subtitle">✨ Premium: tap any card for a deep AI reading</p>
         <div class="tarot-grid" id="tarotGrid"></div>
       </section>
 
       <!-- HOROSCOPE SCREEN -->
       <section class="screen" id="screen-horoscope">
-        <h2 class="screen-title">Your Stars Today</h2>
-        <p class="screen-subtitle">✨ Premium: full love, career & spiritual reading</p>
+        <h2 class="screen-title" data-i18n="horoscope.title">Your Stars Today</h2>
+        <p class="screen-subtitle" data-i18n="horoscope.subtitle">✨ Premium: full love, career & spiritual reading</p>
         <div class="sign-selector" id="horoSignSelector"></div>
         <div class="horoscope-card hidden" id="horoscopeCard">
           <div class="horo-sign-icon" id="horoSignIcon"></div>
           <div class="horo-text" id="horoText"></div>
           <div class="horo-aspects" id="horoAspects"></div>
         </div>
-        <button class="cta-btn" id="getHoroBtn">Read My Horoscope</button>
+        <button class="cta-btn" id="getHoroBtn" data-i18n="horoscope.button">Read My Horoscope</button>
       </section>
 
       <!-- COSMOS SCREEN -->
       <section class="screen" id="screen-cosmos">
-        <h2 class="screen-title">Cosmic Weather</h2>
+        <h2 class="screen-title" data-i18n="cosmos.title">Cosmic Weather</h2>
         <div class="cosmos-grid">
           <div class="cosmos-card">
             <div class="cosmos-icon">🌕</div>
-            <div class="cosmos-label">Moon Phase</div>
+            <div class="cosmos-label" data-i18n="cosmos.moon">Moon Phase</div>
             <div class="cosmos-value" id="moonPhaseName">Full Moon</div>
             <div class="cosmos-desc" id="moonDesc">Emotions run high.</div>
           </div>
           <div class="cosmos-card">
             <div class="cosmos-icon">☀️</div>
-            <div class="cosmos-label">Solar Season</div>
+            <div class="cosmos-label" data-i18n="cosmos.solar">Solar Season</div>
             <div class="cosmos-value" id="solarSeason">Gemini</div>
             <div class="cosmos-desc" id="solarDesc">Communication flows.</div>
           </div>
@@ -155,7 +150,7 @@
             <div class="cosmos-desc">Love and beauty favoured.</div>
           </div>
         </div>
-        <button class="cta-btn" id="cosmicReadingBtn">Get Cosmic Reading</button>
+        <button class="cta-btn" id="cosmicReadingBtn" data-i18n="cosmos.button">Get Cosmic Reading</button>
         <div class="reading-result hidden" id="cosmicResult">
           <div class="result-text" id="cosmicText"></div>
         </div>
@@ -163,22 +158,30 @@
 
     </main>
 
-    <!-- Banner Ad (hidden for premium users) -->
     <div class="banner-ad" id="bannerAd">
       <span class="ad-label">AD</span>
-      <span class="ad-placeholder">Banner ad appears here (Google AdMob)</span>
+      <span class="ad-placeholder">Banner ad appears here</span>
     </div>
 
+  </div>
+
+  <!-- Language Modal -->
+  <div class="modal-overlay hidden" id="langModal">
+    <div class="modal">
+      <h3>🌐 Language</h3>
+      <div class="lang-picker" id="langPicker"></div>
+      <button class="close-btn" id="closeLangModal" data-i18n="modal.cardClose">✕ Close</button>
+    </div>
   </div>
 
   <!-- API Key Modal -->
   <div class="modal-overlay hidden" id="apiModal">
     <div class="modal">
-      <h3>🔮 Connect the Oracle</h3>
-      <p>Enter your Gemini API key to unlock AI-powered readings. Get yours free at <strong>aistudio.google.com/apikey</strong></p>
+      <h3 data-i18n="modal.connectTitle">🔮 Connect the Oracle</h3>
+      <p data-i18n="modal.connectDesc">Enter your Gemini API key to unlock AI-powered readings.</p>
       <input type="password" id="apiKeyInput" placeholder="Paste your Gemini API key..." class="api-input" />
-      <button class="cta-btn" id="saveApiKey">Activate Oracle</button>
-      <p class="modal-note">Your key is saved only on this device.</p>
+      <button class="cta-btn" id="saveApiKey" data-i18n="modal.activate">Activate Oracle</button>
+      <p class="modal-note" data-i18n="modal.savedLocally">Your key is saved only on this device.</p>
     </div>
   </div>
 
@@ -186,23 +189,20 @@
   <div class="modal-overlay hidden" id="premiumModal">
     <div class="modal premium-modal">
       <div class="premium-stars">✦ ✦ ✦</div>
-      <h3>Arcana Premium</h3>
+      <h3 data-i18n="modal.premiumTitle">Veyla Premium</h3>
       <p id="premiumReason"></p>
-
       <div class="premium-features">
-        <div class="feature-row">✨ <span>Unlimited readings every day</span></div>
-        <div class="feature-row">🃏 <span>Deep reading for every tarot card</span></div>
-        <div class="feature-row">⭐ <span>Full love, career & spiritual horoscope</span></div>
-        <div class="feature-row">🌕 <span>5-card spreads instead of 3</span></div>
-        <div class="feature-row">🚫 <span>No ads, ever</span></div>
+        <div class="feature-row">✨ <span data-i18n="modal.premium.unlimited">Unlimited readings every day</span></div>
+        <div class="feature-row">🃏 <span data-i18n="modal.premium.deepCards">Deep reading for every tarot card</span></div>
+        <div class="feature-row">⭐ <span data-i18n="modal.premium.fullHoro">Full love, career & spiritual horoscope</span></div>
+        <div class="feature-row">🌕 <span data-i18n="modal.premium.fiveCards">5-card spreads instead of 3</span></div>
+        <div class="feature-row">🚫 <span data-i18n="modal.premium.noAds">No ads, ever</span></div>
       </div>
-
       <div class="premium-price">£4.99 / month</div>
-      <p class="price-note">Cancel any time. Billed monthly.</p>
-
-      <button class="cta-btn gold-btn" id="purchaseBtn">Unlock Premium – £4.99/month</button>
-      <button class="restore-btn" id="restoreBtn">Restore previous purchase</button>
-      <button class="close-btn" id="closePremiumModal">Maybe later</button>
+      <p class="price-note" data-i18n="modal.premium.priceNote">Cancel any time. Billed monthly.</p>
+      <button class="cta-btn gold-btn" id="purchaseBtn" data-i18n="modal.premium.unlock">Unlock Premium – £4.99/month</button>
+      <button class="restore-btn" id="restoreBtn" data-i18n="modal.premium.restore">Restore previous purchase</button>
+      <button class="close-btn" id="closePremiumModal" data-i18n="modal.premium.later">Maybe later</button>
     </div>
   </div>
 
@@ -213,10 +213,11 @@
       <h3 id="modalCardName"></h3>
       <p class="modal-card-keywords" id="modalCardKeywords"></p>
       <div class="result-text" id="modalCardReading"></div>
-      <button class="close-btn" id="closeCardModal">✕ Close</button>
+      <button class="close-btn" id="closeCardModal" data-i18n="modal.cardClose">✕ Close</button>
     </div>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
