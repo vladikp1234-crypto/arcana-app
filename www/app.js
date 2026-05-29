@@ -511,21 +511,25 @@ async function doOracleReading() {
 
 // ── Claude API Call ────────────────────
 
+
+
+// ── Gemini API Call ────────────────────
+
 async function callClaude(apiKey, prompt) {
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.9,
+          maxOutputTokens: 1000,
+        },
+      }),
+    }
+  );
 
   if (!response.ok) {
     const err = await response.json();
@@ -533,14 +537,14 @@ async function callClaude(apiKey, prompt) {
   }
 
   const data = await response.json();
-  return data.content[0].text;
+  return data.candidates[0].content.parts[0].text;
 }
 
 // ── API Key Modal ──────────────────────
 
 document.getElementById('saveApiKey').addEventListener('click', () => {
   const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key.startsWith('sk-ant-')) { alert('Please enter a valid Claude API key (starts with sk-ant-)'); return; }
+  if (key.length < 20) { alert('Please enter a valid Gemini API key'); return; }
   localStorage.setItem('arcana_api_key', key);
   document.getElementById('apiModal').classList.add('hidden');
   doOracleReading();
