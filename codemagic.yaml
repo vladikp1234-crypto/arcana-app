@@ -29,6 +29,24 @@ workflows:
             PROVISIONING_PROFILE=7f4b684b-77f6-4afe-bf5e-5227850965cc \
             CODE_SIGN_IDENTITY="Apple Distribution" \
             archive
+      - name: Export IPA
+        script: |
+          xcodebuild \
+            -exportArchive \
+            -archivePath build/App.xcarchive \
+            -exportPath build/output \
+            -exportOptionsPlist /dev/stdin << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>teamID</key>
+            <string>NZLX757KSZ</string>
+          </dict>
+          </plist>
+          EOF
     artifacts:
-      - build/App.xcarchive
+      - build/output/*.ipa
       - /tmp/xcodebuild_logs/*.log
