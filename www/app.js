@@ -506,7 +506,45 @@ async function doOracleReading() {
 
   btn.disabled = false;
   btn.querySelector('.btn-text').textContent = 'Consult the Oracle';
+
+  // Add share button after the reading
+  let shareBtn = document.getElementById('shareOracleBtn');
+  if (!shareBtn) {
+    shareBtn = document.createElement('button');
+    shareBtn.id = 'shareOracleBtn';
+    shareBtn.className = 'share-btn';
+    shareBtn.innerHTML = '✨ Share This Reading';
+    resultEl.appendChild(shareBtn);
+  }
+  shareBtn.onclick = () => shareReading(textEl.textContent, cards);
+
   resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Share Reading ──────────────────────
+
+async function shareReading(text, cards) {
+  const cardNames = cards.map(c => `${c.art} ${c.name}`).join(' • ');
+  const shareText = `🔮 My Veyla Reading 🔮\n\n${cardNames}\n\n"${text}"\n\nGet your reading on Veyla — Mystic Oracle ✨`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'My Mystic Reading',
+        text: shareText,
+      });
+    } catch (e) {
+      // User cancelled, no error
+    }
+  } else {
+    // Fallback for browsers without share API — copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareText);
+      showToast('✨ Reading copied! Share anywhere.');
+    } catch (e) {
+      alert(shareText);
+    }
+  }
 }
 
 // ── Claude API Call ────────────────────
@@ -589,3 +627,106 @@ buildSignSelector();
 initCosmos();
 updateHeader();
 updatePremiumUI();
+
+// ══════════════════════════════════════
+// SHUFFLE MODE — Dramatic Card Reading
+// ══════════════════════════════════════
+
+document.getElementById('shuffleBtn').addEventListener('click', async () => {
+  const apiKey = localStorage.getItem('arcana_api_key');
+  if (!apiKey) {
+    document.getElementById('apiModal').classList.remove('hidden');
+    return;
+  }
+
+  if (!Monetisation.canDoReading()) {
+    Monetisation.showUpgradePrompt(`You've used all ${FREE_READINGS_PER_DAY} free readings today. Upgrade for unlimited shuffles ✨`);
+    return;
+  }
+
+  await doShuffleReading();
+});
+
+async function doShuffleReading() {
+  const question = document.getElementById('shuffleQuestion').value.trim() || 'Tell me the story the cards see for me tonight.';
+  const btn = document.getElementById('shuffleBtn');
+  const stage = document.getElementById('shuffleStage');
+  const deck = document.getElementById('deckContainer');
+  const resultEl = document.getElementById('shuffleResult');
+  const cardsEl = document.getElementById('shuffleDrawnCards');
+  const storyEl = document.getElementById('shuffleStory');
+
+  btn.disabled = true;
+  btn.querySelector('.btn-text').textContent = 'Shuffling…';
+  resultEl.classList.add('hidden');
+
+  // Start shuffle animation
+  deck.classList.add('shuffling');
+
+  // Wait for the dramatic effect (2.5 seconds)
+  await new Promise(r => setTimeout(r, 2500));
+
+  deck.classList.remove('shuffling');
+
+  // Draw 3 cards dramatically
+  const cards = drawCards(3);
+  const moon = getMoonPhase();
+  const solar = getSolarSeason();
+
+  cardsEl.innerHTML = '';
+  cards.forEach((card, i) => {
+    const el = document.createElement('div');
+    el.className = 'flipped-card';
+    el.style.animationDelay = `${i * 0.4}s`;
+    el.innerHTML = `
+      <span class="flipped-card-art">${card.art}</span>
+      <span class="flipped-card-name">${card.reversed ? '~' : ''}${card.name}</span>
+    `;
+    cardsEl.appendChild(el);
+  });
+
+  storyEl.innerHTML = '<span class="loading-dots">The cards whisper their story</span>';
+  resultEl.classList.remove('hidden');
+  resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Wait a bit so user sees the cards flip
+  await new Promise(r => setTimeout(r, 1500));
+
+  const apiKey = localStorage.getItem('arcana_api_key');
+  const isPremium = Monetisation.isPremium();
+  const cardDesc = cards.map((c, i) =>
+    `Card ${i+1} (${['the beginning', 'the heart', 'the destiny'][i]}): ${c.name}${c.reversed ? ' reversed' : ''} — ${c.keywords}`
+  ).join('\n');
+
+  const lengthInstruction = isPremium
+    ? 'Tell a vivid 8-10 sentence story. Make it cinematic and personal.'
+    : 'Tell a vivid 5-6 sentence story. Make it cinematic.';
+
+  try {
+    const story = await callClaude(apiKey,
+      `You are a wise, theatrical fortune teller in a candlelit room. The cards have just been shuffled and three drawn for this person who asked: "${question}"
+
+       Cards drawn in order:
+       ${cardDesc}
+
+       Current cosmic energy: Moon is in ${moon.name}, Sun is in ${solar}.
+
+       ${lengthInstruction}
+
+       Tell their story like an old gypsy storyteller — mysterious, captivating, dramatic. Start with something like "I see..." or "The cards reveal..." or "Listen closely...". Weave the three cards into ONE flowing tale about THEIR life — past, present, and what's coming. Be specific, emotional, intriguing. Hint at struggles, hidden truths, and what awaits. Make them feel like the story is uniquely about them. End with one captivating line about their future. No bullet points. No "Card 1, Card 2" — just the story.`);
+
+    storyEl.textContent = story;
+
+    Monetisation.recordReading();
+    updatePremiumUI();
+    await Monetisation.showInterstitialAd();
+  } catch (e) {
+    storyEl.textContent = `The cards have spoken in whispers tonight... ${cards[0].name} marks where you began, ${cards[1].name} burns in your present moment, and ${cards[2].name} waits at the edge of what is yet to come.`;
+  }
+
+  btn.disabled = false;
+  btn.querySelector('.btn-text').textContent = '🎴 Shuffle the Cards';
+
+  // Set up share button
+  document.getElementById('shareShuffleBtn').onclick = () => shareReading(storyEl.textContent, cards);
+}

@@ -640,3 +640,135 @@ html, body {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* ══════════════════════════════════════
+   SHUFFLE MODE + SHARE BUTTON
+   ══════════════════════════════════════ */
+
+/* ── Shuffle Stage ── */
+.shuffle-stage {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 16px 0 24px;
+  perspective: 1000px;
+}
+
+.deck-container {
+  position: relative;
+  width: 120px;
+  height: 180px;
+}
+
+.deck-card {
+  position: absolute;
+  width: 120px;
+  height: 180px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2d0a5e 0%, #1a0535 50%, #0d0225 100%);
+  border: 1px solid rgba(212,168,67,0.4);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.deck-card::before {
+  content: '✦';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: var(--gold);
+  text-shadow: 0 0 15px rgba(212,168,67,0.6);
+  opacity: 0.4;
+}
+
+.deck-card-1 { transform: rotate(-8deg) translateX(-10px); }
+.deck-card-2 { transform: rotate(0deg);  }
+.deck-card-3 { transform: rotate(8deg) translateX(10px); }
+
+.shuffling .deck-card {
+  animation: shuffleCards 0.8s ease-in-out infinite;
+}
+.shuffling .deck-card-1 { animation-delay: 0s; }
+.shuffling .deck-card-2 { animation-delay: 0.15s; }
+.shuffling .deck-card-3 { animation-delay: 0.3s; }
+
+@keyframes shuffleCards {
+  0%, 100% { transform: rotate(var(--rot, 0deg)) translateX(var(--tx, 0)) translateY(0); }
+  50%      { transform: rotate(0deg) translateX(0) translateY(-20px); }
+}
+
+.shuffle-input { margin-bottom: 12px; }
+
+/* ── Drawn Cards Display ── */
+.drawn-cards-display {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.flipped-card {
+  width: 90px;
+  height: 135px;
+  border-radius: 10px;
+  background: linear-gradient(160deg, #1e0440 0%, #0d0225 100%);
+  border: 1px solid rgba(212,168,67,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 20px rgba(155,89,247,0.2);
+  animation: flipIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: rotateY(90deg);
+}
+@keyframes flipIn {
+  0%   { opacity: 0; transform: rotateY(90deg) scale(0.7); }
+  60%  { opacity: 1; transform: rotateY(-10deg) scale(1.05); }
+  100% { opacity: 1; transform: rotateY(0deg) scale(1); }
+}
+.flipped-card-art { font-size: 32px; margin-bottom: 6px; }
+.flipped-card-name {
+  font-size: 11px;
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  font-style: italic;
+  line-height: 1.2;
+}
+
+/* ── Storyteller Text ── */
+.storyteller-text {
+  background: linear-gradient(135deg, rgba(22,3,48,0.7) 0%, rgba(40,5,80,0.5) 100%);
+  border-left: 3px solid var(--gold);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+/* ── Share Button ── */
+.share-btn {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(212,168,67,0.4);
+  border-radius: 12px;
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
+}
+.share-btn:hover {
+  background: rgba(212,168,67,0.1);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}

@@ -30,6 +30,7 @@
     <!-- Navigation -->
     <nav class="nav">
       <button class="nav-btn active" data-screen="home">✦ Oracle</button>
+      <button class="nav-btn" data-screen="shuffle">🎴 Shuffle</button>
       <button class="nav-btn" data-screen="tarot">🃏 Tarot</button>
       <button class="nav-btn" data-screen="horoscope">⭐ Stars</button>
       <button class="nav-btn" data-screen="cosmos">🌙 Cosmos</button>
@@ -75,6 +76,33 @@
           <div class="result-cards" id="drawnCards"></div>
           <div class="result-text" id="oracleText"></div>
           <div class="cosmic-factors" id="cosmicFactors"></div>
+        </div>
+      </section>
+
+      <!-- SHUFFLE SCREEN -->
+      <section class="screen" id="screen-shuffle">
+        <h2 class="screen-title">The Shuffle</h2>
+        <p class="screen-subtitle">Take a breath. Ask the cards your story.</p>
+
+        <div class="shuffle-stage" id="shuffleStage">
+          <div class="deck-container" id="deckContainer">
+            <div class="deck-card deck-card-1"></div>
+            <div class="deck-card deck-card-2"></div>
+            <div class="deck-card deck-card-3"></div>
+          </div>
+        </div>
+
+        <textarea class="question-input shuffle-input" id="shuffleQuestion" placeholder="What is on your mind tonight?"></textarea>
+
+        <button class="cta-btn" id="shuffleBtn">
+          <span class="btn-text">🎴 Shuffle the Cards</span>
+          <span class="btn-glow"></span>
+        </button>
+
+        <div class="shuffle-result hidden" id="shuffleResult">
+          <div class="drawn-cards-display" id="shuffleDrawnCards"></div>
+          <div class="result-text storyteller-text" id="shuffleStory"></div>
+          <button class="share-btn" id="shareShuffleBtn">✨ Share This Story</button>
         </div>
       </section>
 
